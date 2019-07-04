@@ -1,26 +1,36 @@
-import React from 'react';
+import React,{Component} from 'react';
 import SearchBar from './SearchBar';
-import { async } from 'q';
 import unsplash from './api/unsplash';
+import ImageList from './ImageList';
 
-const printTheResultForApp = async (msg)=>{
-    console.log(msg);
+class App extends Component{
+    constructor(){
+        super();
 
-    const response = await unsplash.get('/search/photos',
-    {
-        params:{query:msg},
-        
-    });
+        this.state = {imageList: []};
+    }
 
-    console.log(response)
-}
+    printTheResultForApp = async (msg)=>{
+        console.log(msg);
+    
+        const response = await unsplash.get('/search/photos',
+        {
+            params:{query:msg},
+            
+        });
+    
+        console.log(response);
+        this.setState({imageList: response.data.results}); 
+    }
 
-const App = ()=>{
-    return(
-        <div className="ui container" style={{marginTop:'10px'}}>
-            <SearchBar fun={printTheResultForApp}/>
-        </div>
-    );
+    render(){
+        return(
+            <div className="ui container" style={{marginTop:'10px'}}>
+                <SearchBar fun={this.printTheResultForApp}/>
+                <ImageList/>
+            </div>
+        );
+    }
 }
 
 export default App;
