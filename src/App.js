@@ -27,7 +27,7 @@ class App extends Component{
         return(
             <div className="ui container" style={{marginTop:'10px'}}>
                 <SearchBar fun={this.printTheResultForApp}/>
-                <ImageList/>
+                <ImageList images={this.state.imageList}/>
             </div>
         );
     }
